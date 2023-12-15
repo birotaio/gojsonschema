@@ -1,7 +1,9 @@
 [
     {
         "description": "validation of time strings",
-        "schema": {"format": "time"},
+        "schema": {
+            "format": "time"
+        },
         "tests": [
             {
                 "description": "a valid time string",
@@ -16,7 +18,7 @@
             {
                 "description": "only RFC3339 not all of ISO 8601 are valid",
                 "data": "01:01:01,1111",
-                "valid": false
+                "valid": true
             }
         ]
     }

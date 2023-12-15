@@ -405,6 +405,15 @@ func (v *subSchema) validateCommon(currentSubSchema *subSchema, value interface{
 		internalLog(" %v", value)
 	}
 
+	if currentSubSchema.readOnly {
+		result.addInternalError(
+			new(ReadOnlyError),
+			context,
+			value,
+			ErrorDetails{"property": map[string]interface{}{context.head: value}},
+		)
+	}
+
 	// const:
 	if currentSubSchema._const != nil {
 		vString, err := marshalWithoutNumber(value)
@@ -463,6 +472,15 @@ func (v *subSchema) validateArray(currentSubSchema *subSchema, value []interface
 	}
 
 	nbValues := len(value)
+
+	if currentSubSchema.readOnly {
+		result.addInternalError(
+			new(ReadOnlyError),
+			context,
+			value,
+			ErrorDetails{"property": map[string]interface{}{context.head: value}},
+		)
+	}
 
 	// TODO explain
 	if currentSubSchema.itemsChildrenIsSingleSchema {
@@ -625,6 +643,15 @@ func (v *subSchema) validateObject(currentSubSchema *subSchema, value map[string
 		}
 	}
 
+	if currentSubSchema.readOnly {
+		result.addInternalError(
+			new(ReadOnlyError),
+			context,
+			value,
+			ErrorDetails{"property": value},
+		)
+	}
+
 	// additionalProperty & patternProperty:
 	for pk := range value {
 
@@ -721,6 +748,15 @@ func (v *subSchema) validateString(currentSubSchema *subSchema, value interface{
 		internalLog(" %v", value)
 	}
 
+	if currentSubSchema.readOnly {
+		result.addInternalError(
+			new(ReadOnlyError),
+			context,
+			value,
+			ErrorDetails{"property": value},
+		)
+	}
+
 	stringValue := value.(string)
 
 	// minLength & maxLength:
@@ -771,6 +807,15 @@ func (v *subSchema) validateNumber(currentSubSchema *subSchema, value interface{
 	if internalLogEnabled {
 		internalLog("validateNumber %s", context.String())
 		internalLog(" %v", value)
+	}
+
+	if currentSubSchema.readOnly {
+		result.addInternalError(
+			new(ReadOnlyError),
+			context,
+			value,
+			ErrorDetails{"property": value},
+		)
 	}
 
 	number := value.(json.Number)

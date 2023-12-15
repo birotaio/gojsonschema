@@ -35,6 +35,9 @@ type (
 		// Required returns a format-string for "required" schema validation errors
 		Required() string
 
+		// Required returns a format-string for "readOnly" schema validation errors
+		ReadOnly() string
+
 		// InvalidType returns a format-string for "invalid type" schema validation errors
 		InvalidType() string
 
@@ -200,6 +203,11 @@ func (l DefaultLocale) False() string {
 // Required returns a format-string for "required" schema validation errors
 func (l DefaultLocale) Required() string {
 	return `{{.property}} is required`
+}
+
+// ReadOnly returns a format-string for "readOnly" schema validation errors
+func (l DefaultLocale) ReadOnly() string {
+	return `{{.property}} is readOnly`
 }
 
 // InvalidType returns a format-string for "invalid type" schema validation errors
