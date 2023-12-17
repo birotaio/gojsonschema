@@ -643,15 +643,6 @@ func (v *subSchema) validateObject(currentSubSchema *subSchema, value map[string
 		}
 	}
 
-	if currentSubSchema.readOnly {
-		result.addInternalError(
-			new(ReadOnlyError),
-			context,
-			value,
-			ErrorDetails{"property": value},
-		)
-	}
-
 	// additionalProperty & patternProperty:
 	for pk := range value {
 
@@ -748,15 +739,6 @@ func (v *subSchema) validateString(currentSubSchema *subSchema, value interface{
 		internalLog(" %v", value)
 	}
 
-	if currentSubSchema.readOnly {
-		result.addInternalError(
-			new(ReadOnlyError),
-			context,
-			value,
-			ErrorDetails{"property": value},
-		)
-	}
-
 	stringValue := value.(string)
 
 	// minLength & maxLength:
@@ -807,15 +789,6 @@ func (v *subSchema) validateNumber(currentSubSchema *subSchema, value interface{
 	if internalLogEnabled {
 		internalLog("validateNumber %s", context.String())
 		internalLog(" %v", value)
-	}
-
-	if currentSubSchema.readOnly {
-		result.addInternalError(
-			new(ReadOnlyError),
-			context,
-			value,
-			ErrorDetails{"property": value},
-		)
 	}
 
 	number := value.(json.Number)
