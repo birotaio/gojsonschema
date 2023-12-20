@@ -52,6 +52,13 @@ const SchemaTest string = `
 			"type": ["object", "null"],
 			"properties": {},
 			"readOnly": true
+		},
+		"array_readonly": {
+			"type": ["array", "null"],
+			"items": {
+				"type": "number"
+			},	
+			"readOnly": true
 		}
 	}
 }
