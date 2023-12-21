@@ -27,9 +27,10 @@
 package gojsonschema
 
 import (
-	"github.com/xeipuuv/gojsonreference"
 	"math/big"
 	"regexp"
+
+	"github.com/xeipuuv/gojsonreference"
 )
 
 // Constants
@@ -61,6 +62,7 @@ const (
 	KEY_MAX_PROPERTIES        = "maxProperties"
 	KEY_DEPENDENCIES          = "dependencies"
 	KEY_REQUIRED              = "required"
+	KEY_READ_ONLY             = "readOnly"
 	KEY_MIN_ITEMS             = "minItems"
 	KEY_MAX_ITEMS             = "maxItems"
 	KEY_UNIQUE_ITEMS          = "uniqueItems"
@@ -120,6 +122,7 @@ type subSchema struct {
 	minProperties *int
 	maxProperties *int
 	required      []string
+	readOnly      bool
 
 	dependencies         map[string]interface{}
 	additionalProperties interface{}

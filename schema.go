@@ -73,7 +73,6 @@ func (d *Schema) SetRootSchemaName(name string) {
 // Pretty long function ( sorry :) )... but pretty straight forward, repetitive and boring
 // Not much magic involved here, most of the job is to validate the key names and their values,
 // then the values are copied into subSchema struct
-//
 func (d *Schema) parseSchema(documentNode interface{}, currentSchema *subSchema) error {
 
 	if currentSchema.draft == nil {
@@ -747,6 +746,17 @@ func (d *Schema) parseSchema(documentNode interface{}, currentSchema *subSchema)
 			return errors.New(formatErrorDescription(
 				Locale.MustBeOfAn(),
 				ErrorDetails{"x": KEY_REQUIRED, "y": TYPE_ARRAY},
+			))
+		}
+	}
+
+	if existsMapKey(m, KEY_READ_ONLY) {
+		if isKind(m[KEY_READ_ONLY], reflect.Bool) {
+			currentSchema.readOnly = m[KEY_READ_ONLY].(bool)
+		} else {
+			return errors.New(formatErrorDescription(
+				Locale.MustBeOfA(),
+				ErrorDetails{"x": KEY_READ_ONLY, "y": TYPE_BOOLEAN},
 			))
 		}
 	}

@@ -405,6 +405,15 @@ func (v *subSchema) validateCommon(currentSubSchema *subSchema, value interface{
 		internalLog(" %v", value)
 	}
 
+	if currentSubSchema.readOnly {
+		result.addInternalError(
+			new(ReadOnlyError),
+			context,
+			value,
+			ErrorDetails{"property": map[string]interface{}{context.head: value}},
+		)
+	}
+
 	// const:
 	if currentSubSchema._const != nil {
 		vString, err := marshalWithoutNumber(value)
@@ -463,6 +472,15 @@ func (v *subSchema) validateArray(currentSubSchema *subSchema, value []interface
 	}
 
 	nbValues := len(value)
+
+	if currentSubSchema.readOnly {
+		result.addInternalError(
+			new(ReadOnlyError),
+			context,
+			value,
+			ErrorDetails{"property": map[string]interface{}{context.head: value}},
+		)
+	}
 
 	// TODO explain
 	if currentSubSchema.itemsChildrenIsSingleSchema {

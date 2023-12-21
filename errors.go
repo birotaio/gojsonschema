@@ -28,6 +28,12 @@ type (
 		ResultErrorFields
 	}
 
+	// ReadOnlyError indicates that a required field is missing
+	// ErrorDetails: property string
+	ReadOnlyError struct {
+		ResultErrorFields
+	}
+
 	// InvalidTypeError indicates that a field has the incorrect type
 	// ErrorDetails: expected, given
 	InvalidTypeError struct {
@@ -220,6 +226,9 @@ func newError(err ResultError, context *JsonContext, value interface{}, locale l
 	case *RequiredError:
 		t = "required"
 		d = locale.Required()
+	case *ReadOnlyError:
+		t = "read_only"
+		d = locale.ReadOnly()
 	case *InvalidTypeError:
 		t = "invalid_type"
 		d = locale.InvalidType()
