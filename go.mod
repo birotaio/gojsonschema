@@ -1,15 +1,15 @@
 module github.com/xeipuuv/gojsonschema
 
-go 1.21.5
+go 1.20
 
 require (
+	github.com/getkin/kin-openapi v0.122.0
 	github.com/stretchr/testify v1.8.2
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
 )
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/getkin/kin-openapi v0.122.0 // indirect
 	github.com/go-openapi/jsonpointer v0.19.6 // indirect
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/invopop/yaml v0.2.0 // indirect
