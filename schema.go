@@ -841,6 +841,7 @@ func (d *Schema) parseSchema(documentNode interface{}, currentSchema *subSchema)
 					))
 				}
 				currentSchema.enum = append(currentSchema.enum, *is)
+				currentSchema.rawEnum = append(currentSchema.rawEnum, v)
 			}
 		} else {
 			return errors.New(formatErrorDescription(
