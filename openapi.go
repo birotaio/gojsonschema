@@ -1,6 +1,8 @@
 package gojsonschema
 
-import "github.com/getkin/kin-openapi/openapi3"
+import (
+	"github.com/getkin/kin-openapi/openapi3"
+)
 
 func GetOpenAPI(ls JSONLoader) (*openapi3.Schema, error) {
 	schema, err := NewSchema(ls)
@@ -43,8 +45,8 @@ func recursiveOpenApi(currentSubSchema *subSchema) *openapi3.Schema {
 	}
 
 	if schema != nil {
-		if len(currentSubSchema.enum) > 0 {
-			schema.WithEnum(ToInterface(currentSubSchema.enum)...)
+		if len(currentSubSchema.rawEnum) > 0 {
+			schema.WithEnum(currentSubSchema.rawEnum...)
 		}
 		if currentSubSchema.readOnly {
 			schema.ReadOnly = true
@@ -55,12 +57,4 @@ func recursiveOpenApi(currentSubSchema *subSchema) *openapi3.Schema {
 	}
 
 	return schema
-}
-
-func ToInterface[T any](a []T) []any {
-	res := make([]any, 0)
-	for _, obj := range a {
-		res = append(res, obj)
-	}
-	return res
 }
