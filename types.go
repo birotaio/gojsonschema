@@ -34,6 +34,7 @@ const (
 	TYPE_NULL    = `null`
 	TYPE_OBJECT  = `object`
 	TYPE_STRING  = `string`
+	TYPE_CONST   = `const`
 )
 
 // JSON_TYPES hosts the list of type that are supported in JSON
@@ -50,7 +51,9 @@ func init() {
 		TYPE_NUMBER,
 		TYPE_NULL,
 		TYPE_OBJECT,
-		TYPE_STRING}
+		TYPE_STRING,
+		TYPE_CONST,
+	}
 
 	SCHEMA_TYPES = []string{
 		TYPE_ARRAY,
@@ -58,5 +61,7 @@ func init() {
 		TYPE_INTEGER,
 		TYPE_NUMBER,
 		TYPE_OBJECT,
-		TYPE_STRING}
+		TYPE_STRING,
+		TYPE_CONST,
+	}
 }

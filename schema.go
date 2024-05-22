@@ -825,6 +825,7 @@ func (d *Schema) parseSchema(documentNode interface{}, currentSchema *subSchema)
 			return err
 		}
 		currentSchema._const = is
+		currentSchema.rawConst = m[KEY_CONST]
 	}
 
 	if existsMapKey(m, KEY_ENUM) {
