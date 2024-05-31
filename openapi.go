@@ -38,21 +38,45 @@ func recursiveOpenApi(currentSubSchema *subSchema) *openapi3.Schema {
 		schema = openapi3.NewIntegerSchema()
 	} else if currentSubSchema.types.Contains(TYPE_STRING) {
 		schema = openapi3.NewStringSchema()
-
-		if currentSubSchema.format != "" {
-			schema.WithFormat(currentSubSchema.format)
-		}
+	} else if currentSubSchema.types.Contains(TYPE_CONST) {
+		schema = &openapi3.Schema{Type: TYPE_CONST}
 	}
 
-	if schema != nil {
-		if len(currentSubSchema.rawEnum) > 0 {
-			schema.WithEnum(currentSubSchema.rawEnum...)
+	if schema == nil {
+		return nil
+	}
+
+	if currentSubSchema.format != "" {
+		schema.WithFormat(currentSubSchema.format)
+	}
+
+	if currentSubSchema._const != nil {
+		if schema.Extensions == nil {
+			schema.Extensions = make(map[string]interface{})
 		}
-		if currentSubSchema.readOnly {
-			schema.ReadOnly = true
-		}
-		if currentSubSchema.types.Contains(TYPE_NULL) {
-			schema.Nullable = true
+
+		schema.Extensions["const"] = currentSubSchema.rawConst
+	}
+
+	if currentSubSchema.title != nil {
+		schema.Title = *currentSubSchema.title
+	}
+
+	if len(currentSubSchema.rawEnum) > 0 {
+		schema.WithEnum(currentSubSchema.rawEnum...)
+	}
+
+	if currentSubSchema.readOnly {
+		schema.ReadOnly = true
+	}
+
+	if currentSubSchema.types.Contains(TYPE_NULL) {
+		schema.Nullable = true
+	}
+
+	if len(currentSubSchema.oneOf) > 0 {
+		for _, value := range currentSubSchema.oneOf {
+			schema.OneOf = append(schema.OneOf, &openapi3.SchemaRef{Value: recursiveOpenApi(value)})
 		}
 	}
 

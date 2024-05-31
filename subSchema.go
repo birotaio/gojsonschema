@@ -138,9 +138,10 @@ type subSchema struct {
 	additionalItems interface{}
 
 	// validation : all
-	_const  *string //const is a golang keyword
-	enum    []string
-	rawEnum []any
+	_const   *string //const is a golang keyword
+	rawConst any
+	enum     []string
+	rawEnum  []any
 
 	// validation : subSchema
 	oneOf []*subSchema
